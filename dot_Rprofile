@@ -1,0 +1,43 @@
+# Set CRAN mirror
+options(repos=structure(c(CRAN="https://cloud.r-project.org")))
+
+install_if_missing <- function(package, extra = "") {
+    if (!nzchar(system.file(package = package))) {
+        print(paste("Installing", package))
+        utils::install.packages(package)
+        if (nzchar(extra)) extra
+    }
+}
+
+install_github_if_missing <- function(package, user, extra = "") {
+    if (!nzchar(system.file(package = package))) {
+        print(paste("Installing", package, "from GitHub"))
+        remotes::install_github(paste(user, package, sep = "/"))
+        if (nzchar(extra)) extra
+    }
+}
+
+# Install languageserver for vscode-R
+install_if_missing("languageserver")
+
+# httpgd is an R package to provide a graphics device that asynchronously serves SVG graphics via HTTP and WebSockets. It enables the plot viewer based on httpgd in VS Code.
+install_if_missing("httpgd")
+options(vsc.use_httpgd = TRUE)
+
+install_if_missing("tinytex", tinytex::install_tinytex())
+
+install_if_missing("devtools")
+install_if_missing("remotes")
+
+install_if_missing("tidyverse")
+
+install_github_if_missing("tflow", "MilesMcBain")
+install_github_if_missing("capsule", "MilesMcBain")
+install_github_if_missing("fnmate", "MilesMcBain")
+install_github_if_missing("breakerofchains", "MilesMcBain")
+install_github_if_missing("rmdocs", "MilesMcBain")
+install_if_missing("Jmisc")
+install_if_missing("beepr")
+
+# So that fnmate::jump_fn_definition() works on macOS
+options("fnmate_quote_jump_regex" = TRUE)
