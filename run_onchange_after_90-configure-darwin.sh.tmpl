@@ -1,0 +1,42 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+# chezmoi header and footer from https://github.com/twpayne/dotfiles/blob/7873d5735522915076c17d41ad52c8ac813d321b/run_onchange_after_90-configure-darwin.sh.tmpl
+
+# ~/.macos — https://mths.be/macos
+
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+###############################################################################
+# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+###############################################################################
+
+# Trackpad: enable tap to click for this user and for the login screen
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+
+# Set language and text formats
+defaults write NSGlobalDomain AppleLanguages -array "en-AU" "he-AU"
+defaults write NSGlobalDomain AppleLocale -string "en_AU@currency=AUD"
+defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
+defaults write NSGlobalDomain AppleMetricUnits -bool true
+
+###############################################################################
+# Dock, Dashboard, and hot corners                                            #
+###############################################################################
+
+# Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
+
+echo "Done. Note that some of these changes require a logout/restart to take effect."
+
+{{ end -}}
