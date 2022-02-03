@@ -661,6 +661,9 @@ contains an ID, that ID will be replaced with a new one."
   ;; Always follow symlinks (from https://stackoverflow.com/a/30900018/13945974)
   ;; Needed for chezmoi
   (setq vc-follow-symlinks t)
+
+  ;; Remove cl startup warning (from https://github.com/kiwanami/emacs-epc/issues/35#issuecomment-773420321)
+  (setq byte-compile-warnings '(cl-functions))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
