@@ -656,6 +656,9 @@ contains an ID, that ID will be replaced with a new one."
                  (kill-new (buffer-string)))
           (kill-buffer buf)))))
   ;; (define-key org-mode-map "\C-cn" 'org-mactions-new-numbered-action)
+  ;; Always follow symlinks (from https://stackoverflow.com/a/30900018/13945974)
+  ;; Needed for chezmoi
+  (setq vc-follow-symlinks t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
