@@ -69,6 +69,8 @@ This function should only modify configuration layer settings."
      pdf
      (latex :variables 
             latex-build-command "xelatex")
+     ;; Private layer from https://github.com/tuh8888/chezmoi.el
+     chezmoi
     )
 
 
