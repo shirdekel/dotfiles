@@ -61,13 +61,13 @@ This function should only modify configuration layer settings."
      github
      html
      osx
-     (ess :variables 
+     (ess :variables
           ess-r-backend 'lsp)
      treemacs
      (javascript :variables
                  javascript-backend 'lsp)
      pdf
-     (latex :variables 
+     (latex :variables
             latex-build-command "xelatex")
      ;; Private layer from https://github.com/tuh8888/chezmoi.el
      chezmoi
@@ -566,7 +566,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (spacemacs/toggle-truncate-lines-on) 
+  (spacemacs/toggle-truncate-lines-on)
   (setq-default auto-fill-function 'do-auto-fill)
   (spacemacs/toggle-visual-line-navigation-on)
   (spacemacs/toggle-golden-ratio-on)
@@ -586,7 +586,7 @@ before packages are loaded."
   (define-key evil-normal-state-map [mouse-2] nil)
   (define-key evil-insert-state-map [mouse-2] nil)
   (define-key global-map [mouse-2] nil)
-  (setq TeX-engine 'xetex) 
+  (setq TeX-engine 'xetex)
   (setq org-todo-keywords
         '((sequence "TODO(t!)" "CANCELLED(c!)" "DONE(d!)")))
   (setq org-todo-keyword-faces
