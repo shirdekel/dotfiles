@@ -27,6 +27,13 @@ cask "r"
 cask "adobe-creative-cloud"
 cask "vlc"
 cask "qbittorrent"
+
+# Emacs installation (from https://github.com/syl20bnr/spacemacs#macos)
+# Can't get emacs-plus to work as Emacs.app
+cask "emacs"
+tap "homebrew/cask-fonts"
+brew "svn"
+cask "font-source-code-pro"
 EOF
 
 # R console to use in VSCode
@@ -50,6 +57,12 @@ echo "Config Editor modifications: extensions.zotero.recursiveCollections;true, 
 #sudo chown -R `whoami`:admin /usr/local/bin
 
 #~/Library/TinyTeX/bin/*/tlmgr path add
+
+# Spacemacs
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+# Download logo manually: https://github.com/nashamri/spacemacs-logo/raw/master/spacemacs.icns
+# Add to icon manually: https://www.idownloadblog.com/2014/07/16/how-to-change-app-icon-mac/
+
 
 {{ end -}}
 
