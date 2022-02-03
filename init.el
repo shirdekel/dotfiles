@@ -38,22 +38,38 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
-     ;; better-defaults
+     auto-completion
+     better-defaults
      emacs-lisp
-     ;; git
+     git
      helm
-     ;; lsp
-     ;; markdown
+     lsp
+     pandoc
+     (markdown :variables
+               markdown-command "pandoc"
+               markdown-live-preview-mode nil)
      multiple-cursors
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
-     treemacs)
+     (org :variables
+          org-want-todo-bindings t)
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     spell-checking
+     syntax-checking
+     version-control
+     treemacs
+     github
+     html
+     osx
+     (ess :variables 
+          ess-r-backend 'lsp)
+     treemacs
+     (javascript :variables
+                 javascript-backend 'lsp)
+     pdf
+     (latex :variables 
+            latex-build-command "xelatex")
+    )
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -64,7 +80,10 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+     poly-R
+     auto-complete
+   )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
