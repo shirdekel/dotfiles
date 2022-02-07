@@ -40,6 +40,13 @@ defaults write com.apple.dock mru-spaces -bool false
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
+###############################################################################
+# Other                                                                       #
+###############################################################################
+
+# Allow Emacs access to Documents and Desktop directories
+echo "Security & Privacy -> Privacy -> Full Disk Access -> + -> /Applications/Emacs.app/"
+
 echo "Done. Note that some of these changes require a logout/restart to take effect."
 
 {{ end -}}
