@@ -35,6 +35,187 @@
       (lsp-deferred)
     (message "`lsp' layer is not installed, please add `lsp' layer to your dotfile.")))
 
+;; fnmate
+
+(defun text-around-cursor (&optional rows-around)
+  (let ((rows-around (or rows-around 10))
+        (current-line (line-number-at-pos))
+        (initial-point (point)))
+    (save-mark-and-excursion
+      (goto-line (- current-line rows-around))
+      (set-mark (point))
+      (goto-line (+ current-line rows-around))
+      (end-of-line)
+      ;; Return a list of text, index
+      (list (buffer-substring-no-properties (mark) (point))
+            (+ (- initial-point (mark)) 1)))))
+
+(defun strip-ess-output-junk (r-buffer)
+  (with-current-buffer r-buffer
+    (goto-char (point-min))
+    (while (re-search-forward "\\+\s" nil t)
+      (replace-match ""))))
+
+(defun exec-r-fn-to-buffer (r_fn text)
+  (let ((r-process (ess-get-process))
+        (r-output-buffer (get-buffer-create "*R-output*")))
+    (ess-string-command
+     (format "cat(%s(%s))\n" r_fn text)
+     r-output-buffer nil)
+    (strip-ess-output-junk r-output-buffer)
+    (save-mark-and-excursion
+      (goto-char (point-max))
+      (newline)
+      (insert-buffer r-output-buffer))))
+
+;; fnmate functions for keybindings
+(defun fnmate ()
+  (interactive)
+  (let* ((input-context (text-around-cursor))
+         (text (prin1-to-string (car input-context)))
+         (index (cdr input-context)))
+    (ess-eval-linewise (format "fnmate::fnmate_fn.R(%s, %s)" text index))))
+
+;; Drake
+(defun drake-make ()
+  (interactive)
+  ;; (ess-eval-linewise "drake::r_make()")
+  (ess-eval-linewise "capsule::run(drake::r_make())")
+  (ess-eval-linewise "beepr::beep()"))
+
+;; Unlock Drake
+(defun drake-unlock ()
+  (interactive)
+  (ess-eval-linewise "drake::drake_cache(here::here('.drake'))$unlock()"))
+
+(defun readd-target-at-point ()
+  "call drake::readd on object at point to load it into environment."
+  (interactive)
+  (let ((target (symbol-at-point)))
+    (ess-eval-linewise (format "%s <- drake::readd(%s)\n" target target))))
+
+;; Targets
+(defun targets-make ()
+  (interactive)
+  (ess-eval-linewise "capsule::run(targets::tar_make())")
+  (ess-eval-linewise "beepr::beep()"))
+
+(defun targets-read-target-at-point ()
+  "call targets::tar_read() on object at point to load it into environment."
+  (interactive)
+  (let ((target (symbol-at-point)))
+    (ess-eval-linewise (format "%s <- targets::tar_read(%s)\n" target target))))
+
+;; Source
+(defun source-functions ()
+  "source ./R"
+  (interactive)
+  (ess-eval-linewise "Jmisc::sourceAll('R')"))
+
+(defun source-packages-file ()
+  "source ./packages.R"
+  (interactive)
+  (ess-eval-linewise "source('./packages.R')"))
+
+;; Tidyverse IDE
+(defun tide-insert-pipe ()
+  "Insert a %>% and newline"
+  (interactive)
+  (insert " %>%"))
+
+;; Mark a word at a point
+;; http://www.emacswiki.org/emacs/ess-edit.el
+(defun ess-edit-word-at-point ()
+  (save-excursion
+    (buffer-substring
+     (+ (point) (skip-chars-backward "a-zA-Z0-9._"))
+     (+ (point) (skip-chars-forward "a-zA-Z0-9._")))))
+;; eval any word where the cursor is (objects, functions, etc)
+(defun ess-eval-word ()
+  (interactive)
+  (let ((x (ess-edit-word-at-point)))
+    (ess-eval-linewise (concat x)))
+  )
+
+;; Shiny
+(defun tide-shiny-run-app ()
+  "Run a shiny app in the current working directory"
+  (interactive)
+  (ess-eval-linewise "shiny::runApp()"))
+
+;; Rmarkdowm
+
+;; Insert a new (empty) chunk to R markdown
+(defun insert-chunk ()
+  "Insert chunk environment Rmd sessions."
+  (interactive)
+  (insert "```{r}\n\n```")
+  (forward-line -1)
+  )
+;; key binding
+(global-set-key (kbd "C-c i") 'insert-chunk)
+
+(defun tide-rmd-rend ()
+  "Render rmarkdown files with an interactive selection prompt"
+  (interactive)
+  (ess-eval-linewise "mmmisc::rend()"))
+
+(defun tide-draft-rmd ()
+  "Draft a new Rmd file from a template interactively."
+  (interactive)
+  (setq rmd-file
+        (read-from-minibuffer "Rmd Filename (draft_<date>.Rmd): "
+                              nil nil t t
+                              (format "draft_%s.Rmd"
+                                      (string-trim
+                                       (shell-command-to-string "date --iso-8601")))))
+  (setq rmd-template
+        (read-from-minibuffer
+         (format "Draft %s from template (mmmisc/basic): " rmd-file)
+         nil nil t t "mmmisc/basic"))
+  (symbol-name rmd-template)
+  (string-match "\\([^/]+\\)/\\([^/]+\\)"
+                (symbol-name rmd-template))
+  (setq template-pkg
+        (substring
+         (symbol-name rmd-template)
+         (match-beginning 1)
+         (match-end 1)))
+  (setq template-name
+        (substring
+         (symbol-name rmd-template)
+         (match-beginning 2)
+         (match-end 2)))
+  (message "Drafting using template %s from package %s" template-name template-pkg)
+  (ess-eval-linewise
+   (format "rmarkdown::draft(file = \"%s\", template = \"%s\",
+                package = \"%s\", edit = FALSE)"
+           rmd-file template-name template-pkg))
+  )
+
+;; Styling
+(defun tide-save-and-style-file ()
+  "Save the current buffer and style using styler"
+  (interactive)
+  (save-buffer)
+  (let ((filename (buffer-file-name)))
+    (ess-eval-linewise
+     (format "styler::style_file(\"%s\")" filename))))
+
+;; Set fontification
+(setq ess-R-font-lock-keywords
+      '((ess-R-fl-keyword:keywords   . t)
+        (ess-R-fl-keyword:constants  . t)
+        (ess-R-fl-keyword:modifiers  . t)
+        (ess-R-fl-keyword:fun-defs   . t)
+        (ess-R-fl-keyword:assign-ops . t)
+        (ess-R-fl-keyword:%op%       . t)
+        (ess-fl-keyword:fun-calls    . t)
+        (ess-fl-keyword:numbers)
+        (ess-fl-keyword:operators . t)
+        (ess-fl-keyword:delimiters)
+        (ess-fl-keyword:=)
+        (ess-R-fl-keyword:F&T)))
 
 ;; Key Bindings
 
@@ -45,12 +226,39 @@
   (spacemacs/declare-prefix-for-mode mode "mDc" "check")
   (spacemacs/declare-prefix-for-mode mode "mE" "extra")
   (spacemacs/declare-prefix-for-mode mode "mh" "help")
+  (spacemacs/declare-prefix-for-mode mode "mm" "make")
+  (spacemacs/declare-prefix-for-mode mode "mf" "fnmate")
+  (spacemacs/declare-prefix-for-mode mode "mk" "rmarkdown")
+  (spacemacs/declare-prefix-for-mode mode "mS" "shiny")
+  (spacemacs/declare-prefix-for-mode mode "mc" "code")
   (spacemacs/set-leader-keys-for-major-mode mode
     "h" 'ess-doc-map              ;; help
     "d" 'ess-dev-map              ;; debug
     "D" 'ess-r-package-dev-map    ;; devtools
-    "E" 'ess-extra-map))            ;; extra
-
+    "E" 'ess-extra-map            ;; extra
+    ;; Make
+    "mf" 'source-functions
+    "mm" 'drake-make
+    "mt" 'targets-make
+    "mu" 'drake-unlock
+    "mr" 'readd-target-at-point
+    "ml" 'targets-read-target-at-point
+    "mp" 'source-packages-file
+    ;; Fnmate
+    "ff" 'fnmate
+    ;; REPL
+    "i" 'ess-interrupt
+    "o" 'ess-eval-word
+    "e" 'ess-eval-paragraph-and-step
+    ;; R Markdown
+    "kc" 'polymode-eval-chunk
+    "kr" 'tide-rmd-rend
+    "rd" 'tide-draft-rmd
+    ;; Style
+    "cs" 'tide-save-and-style-file
+    ;; Shiny
+    "Sr" 'tide-shiny-run-app
+    ))
 
 (defun spacemacs//ess-bind-repl-keys-for-mode (mode)
   "Set the REPL keys in MODE."
