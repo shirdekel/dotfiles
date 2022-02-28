@@ -95,6 +95,10 @@ This function should only modify configuration layer settings."
                   (recipe
                    :fetcher github
                    :repo "io12/org-fragtog"))
+     (spss :location
+           (recipe
+            :fetcher github
+            :repo "atanasj/spss-mode"))
    )
 
    ;; A list of packages that cannot be updated.
@@ -695,6 +699,9 @@ contains an ID, that ID will be replaced with a new one."
 
   ;; Increase org latex preview size
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+
+  ;; Load spss-mode
+  (require 'spss)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
