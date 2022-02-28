@@ -87,6 +87,10 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(
      poly-R
      auto-complete
+     (bitwarden :location
+                (recipe
+                 :fetcher github
+                 :repo "seanfarley/emacs-bitwarden"))
    )
 
    ;; A list of packages that cannot be updated.
