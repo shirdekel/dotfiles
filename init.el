@@ -91,6 +91,10 @@ This function should only modify configuration layer settings."
                 (recipe
                  :fetcher github
                  :repo "seanfarley/emacs-bitwarden"))
+     (org-fragtog :location
+                  (recipe
+                   :fetcher github
+                   :repo "io12/org-fragtog"))
    )
 
    ;; A list of packages that cannot be updated.
@@ -676,6 +680,21 @@ contains an ID, that ID will be replaced with a new one."
 
   ;; Open ranger by default
   (ranger-override-dired-mode t)
+
+  ;; Set default latex org preview process
+  ;; dvipng doesn't seem to work (I think because it isn't a standalone
+  ;; application in macOS)
+  ;; Also needed to run ~tlmgr install ulem~ to fix ~org-compile-file: File
+  ;; "/var/folders/61/90npj48j5k5g3wtr27vwl1yr0000gn/T/orgtexZFtavX.pdf" wasn’t
+  ;; produced.  Please adjust ‘imagemagick’ part of
+  ;; ‘org-preview-latex-process-alist’.~ error
+  (setq org-preview-latex-default-process 'imagemagick)
+
+  ;; Enable org-frag-mode
+  (add-hook 'org-mode-hook 'org-fragtog-mode)
+
+  ;; Increase org latex preview size
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
