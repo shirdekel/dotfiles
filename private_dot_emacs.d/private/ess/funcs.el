@@ -228,7 +228,7 @@
   (spacemacs/declare-prefix-for-mode mode "mh" "help")
   (spacemacs/declare-prefix-for-mode mode "mm" "make")
   (spacemacs/declare-prefix-for-mode mode "mf" "fnmate")
-  (spacemacs/declare-prefix-for-mode mode "mr" "rmarkdown")
+  (spacemacs/declare-prefix-for-mode mode "mk" "rmarkdown")
   (spacemacs/declare-prefix-for-mode mode "mS" "shiny")
   (spacemacs/declare-prefix-for-mode mode "mc" "code")
   (spacemacs/set-leader-keys-for-major-mode mode
@@ -251,9 +251,9 @@
     "o" 'ess-eval-word
     "e" 'ess-eval-paragraph-and-step
     ;; R Markdown
-    "rc" 'polymode-eval-chunk
-    "rr" 'tide-rmd-rend
-    "rd" 'tide-draft-rmd
+    "kc" 'polymode-eval-chunk
+    "kr" 'tide-rmd-rend
+    "kd" 'tide-draft-rmd
     ;; Style
     "cs" 'tide-save-and-style-file
     ;; Shiny
