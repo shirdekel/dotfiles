@@ -697,6 +697,9 @@ contains an ID, that ID will be replaced with a new one."
   ;; Enable org-frag-mode
   (add-hook 'org-mode-hook 'org-fragtog-mode)
 
+  ;; Enable preview by default
+  (setq org-startup-with-latex-preview t)
+
   ;; Increase org latex preview size
   (require 'org)
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
