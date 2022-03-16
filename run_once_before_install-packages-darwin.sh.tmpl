@@ -35,12 +35,19 @@ cask "rstudio"
 cask "the-unarchiver"
 
 # Emacs installation (from https://github.com/syl20bnr/spacemacs#macos)
-# Can't get emacs-plus to work as Emacs.app
-cask "emacs"
+tap "d12frosted/emacs-plus"
+brew "emacs-plus@28", args: ["with-spacemacs-icon"], link: true
+
+# Install Source Code Pro font for Emacs
 tap "homebrew/cask-fonts"
 brew "svn"
 cask "font-source-code-pro"
 EOF
+
+# Link Emacs to Applications directory if it doesn't already exist there
+if [ ! -e "/Applications/Emacs.app" ]; then
+ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
+fi
 
 # R console to use in VSCode
 pip3 install -U radian
