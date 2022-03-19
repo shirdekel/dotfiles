@@ -710,6 +710,9 @@ contains an ID, that ID will be replaced with a new one."
 
   ;; Enable indented org mode at startup
   (setq org-startup-indented t)
+
+  ;; Enable smartparens in text-mode
+  (add-hook 'text-mode-hook (lambda () (smartparens-global-mode t)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
