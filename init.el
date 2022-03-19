@@ -99,6 +99,7 @@ This function should only modify configuration layer settings."
            (recipe
             :fetcher github
             :repo "atanasj/spss-mode"))
+     osm
    )
 
    ;; A list of packages that cannot be updated.
