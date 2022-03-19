@@ -581,7 +581,6 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (spacemacs/toggle-truncate-lines-on)
   (setq-default auto-fill-function 'do-auto-fill)
   (spacemacs/toggle-visual-line-navigation-on)
   (spacemacs/toggle-golden-ratio-on)
