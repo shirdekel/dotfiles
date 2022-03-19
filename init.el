@@ -713,6 +713,9 @@ contains an ID, that ID will be replaced with a new one."
 
   ;; Enable smartparens in text-mode
   (add-hook 'text-mode-hook (lambda () (smartparens-global-mode t)))
+
+  ;; Show word-granularity differences within diff hunks
+  (setq magit-diff-refine-hunk 'all)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
