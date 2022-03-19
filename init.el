@@ -584,7 +584,8 @@ before packages are loaded."
   (setq-default auto-fill-function 'do-auto-fill)
   (spacemacs/toggle-visual-line-navigation-on)
   (spacemacs/toggle-golden-ratio-on)
-  (global-visual-line-mode t)
+  (add-hook 'text-mode-hook (lambda () (visual-line-mode t)))
+  (add-hook 'prog-mode-hook (lambda () (visual-line-mode t)))
   (global-prettify-symbols-mode 1)
   (use-package ess-r-mode
     :bind
