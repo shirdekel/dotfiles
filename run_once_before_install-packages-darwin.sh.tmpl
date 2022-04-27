@@ -13,7 +13,7 @@ brew "pandoc"
 brew "ripgrep"
 brew "aspell"
 brew "coreutils"
-brew "koekeishiya/formulae/yabai", args: ["HEAD"]
+brew "koekeishiya/formulae/yabai"
 brew "koekeishiya/formulae/skhd"
 
 cask "brave-browser"
@@ -77,9 +77,6 @@ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 fi
 # Download logo manually: https://github.com/nashamri/spacemacs-logo/raw/master/spacemacs.icns
 # Add to icon manually: https://www.idownloadblog.com/2014/07/16/how-to-change-app-icon-mac/
-
-# Yabai
-codesign -fs 'yabai-cert' $(which yabai)
 
 # Logi Options+
 # Install manually: https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.zip
