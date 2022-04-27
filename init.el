@@ -599,10 +599,12 @@ before packages are loaded."
     :bind
     (:map ess-r-mode-map
           ("C-'" . ess-insert-assign)
-          ("C-\"" . tide-insert-pipe))
+          ("C-\"" . insert-native-pipe)
+          ("C-:" . tide-insert-pipe))
     (:map inferior-ess-r-mode-map
           ("C-'" . ess-insert-assign)
-          ("C-\"" . tide-insert-pipe)))
+          ("C-\"" . insert-native-pipe)
+          ("C-:" . tide-insert-pipe)))
   (global-company-mode)
   (setq-local comint-use-prompt-regexp nil)
   (setq-local inhibit-field-text-motion nil)
