@@ -123,6 +123,11 @@
   (interactive)
   (insert " %>%"))
 
+(defun insert-native-pipe ()
+  "Insert a |> and newline"
+  (interactive)
+  (insert " |>"))
+
 ;; Mark a word at a point
 ;; http://www.emacswiki.org/emacs/ess-edit.el
 (defun ess-edit-word-at-point ()
