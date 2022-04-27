@@ -60,7 +60,14 @@ This function should only modify configuration layer settings."
      treemacs
      github
      html
-     osx
+     (osx :variables osx-command-as       'control
+          osx-option-as        'meta
+          osx-control-as       'hyper
+          osx-function-as      nil
+          osx-right-command-as 'left
+          osx-right-option-as  'left
+          osx-right-control-as 'left
+          osx-swap-option-and-command nil)
      (ess :variables
           ess-r-backend 'lsp)
      treemacs
