@@ -69,7 +69,8 @@ This function should only modify configuration layer settings."
           osx-right-control-as 'left
           osx-swap-option-and-command nil)
      (ess :variables
-          ess-r-backend 'lsp)
+          ess-r-backend 'lsp
+          polymode-lsp-integration nil)
      treemacs
      (javascript :variables
                  javascript-backend 'lsp)
