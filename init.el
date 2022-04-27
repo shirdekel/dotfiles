@@ -725,7 +725,7 @@ contains an ID, that ID will be replaced with a new one."
   (add-hook 'text-mode-hook (lambda () (smartparens-global-mode t)))
 
   ;; Show word-granularity differences within diff hunks
-  (setq magit-diff-refine-hunk 'all)
+  (setq magit-diff-refine-hunk t)
 
   ;; Try fix emacs hang issue
   ;; Possibly because of minibuffer-history being large
