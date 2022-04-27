@@ -726,6 +726,15 @@ contains an ID, that ID will be replaced with a new one."
 
   ;; Show word-granularity differences within diff hunks
   (setq magit-diff-refine-hunk 'all)
+
+  ;; Try fix emacs hang issue
+  ;; Possibly because of minibuffer-history being large
+  ;; From https://github.com/syl20bnr/spacemacs/issues/9409#issuecomment-323373826
+  (setq history-length 100)
+  (put 'minibuffer-history 'history-length 50)
+  (put 'evil-ex-history 'history-length 50)
+  (put 'kill-ring 'history-length 25)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
