@@ -761,6 +761,15 @@ By default, all subentries are counted; restrict with LEVEL."
                                    (<= (org-current-level) maxlevel)))
                              match (or scope 'tree)))))))))
 
+  ;; Set favourite time zones
+  (setq tzc-favourite-time-zones-alist '(("Australia/Sydney" "Sydney")
+                                         ("Australia/Perth" "Perth")
+                                         ("Europe/London" "London")
+                                         ("America/New_York" "US-Eastern")
+                                         ("America/Chicago" "US-Central")
+                                         ("America/Denver" "US-Mountain")
+					                               ("America/Los_Angeles" "US-Pacific")))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
