@@ -97,7 +97,7 @@
 ;; Targets
 (defun targets-make ()
   (interactive)
-  (ess-eval-linewise "capsule::run(targets::tar_make())")
+  (ess-eval-linewise "targets::tar_make()")
   (ess-eval-linewise "beepr::beep()"))
 
 (defun targets-read-target-at-point ()
