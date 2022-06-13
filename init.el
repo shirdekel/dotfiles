@@ -771,6 +771,14 @@ By default, all subentries are counted; restrict with LEVEL."
                                          ("America/Denver" "US-Mountain")
 					                               ("America/Los_Angeles" "US-Pacific")))
 
+  ;; Fix "Too many open files" https://www.blogbyben.com/2022/05/gotcha-emacs-on-mac-os-too-many-files.html
+  (defun file-notify-rm-all-watches ()
+    "Remove all existing file notification watches from Emacs."
+    (interactive)
+    (maphash
+     (lambda (key _value)
+       (file-notify-rm-watch key))
+     file-notify-descriptors))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
