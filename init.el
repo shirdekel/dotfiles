@@ -59,7 +59,6 @@ This function should only modify configuration layer settings."
      syntax-checking
      version-control
      treemacs
-     github
      html
      (osx :variables osx-command-as       'control
           osx-option-as        'meta
