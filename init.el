@@ -784,6 +784,10 @@ By default, all subentries are counted; restrict with LEVEL."
   ;; From https://evil.readthedocs.io/en/latest/settings.html#elispobj-evil-kill-on-visual-paste
 
   (setq evil-kill-on-visual-paste nil)
+
+  ;; Disable LSP sideline
+  (setq lsp-ui-sideline-enable nil)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
