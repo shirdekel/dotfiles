@@ -110,6 +110,7 @@ This function should only modify configuration layer settings."
      osm
      quarto-mode
      tzc
+     ess-view-data
    )
 
    ;; A list of packages that cannot be updated.
