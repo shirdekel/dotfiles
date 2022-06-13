@@ -764,6 +764,7 @@ By default, all subentries are counted; restrict with LEVEL."
   ;; Set favourite time zones
   (setq tzc-favourite-time-zones-alist '(("Australia/Sydney" "Sydney")
                                          ("Australia/Perth" "Perth")
+                                         ("Asia/Tel_Aviv" "Israel")
                                          ("Europe/London" "London")
                                          ("America/New_York" "US-Eastern")
                                          ("America/Chicago" "US-Central")
