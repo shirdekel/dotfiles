@@ -779,6 +779,11 @@ By default, all subentries are counted; restrict with LEVEL."
      (lambda (key _value)
        (file-notify-rm-watch key))
      file-notify-descriptors))
+
+  ;; Disable adding replaced text to kill ring
+  ;; From https://evil.readthedocs.io/en/latest/settings.html#elispobj-evil-kill-on-visual-paste
+
+  (setq evil-kill-on-visual-paste nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
