@@ -221,6 +221,15 @@
         (ess-fl-keyword:delimiters)
         (ess-fl-keyword:=)
         (ess-R-fl-keyword:F&T)))
+
+;; Output object structure
+
+(defun output-object-structure ()
+  "Call str() on object at point."
+  (interactive)
+  (let ((target (symbol-at-point)))
+    (ess-eval-linewise (format "str(%s, 2)\n" target target))))
+
 
 ;; Key Bindings
 
@@ -255,6 +264,7 @@
     "i" 'ess-interrupt
     "o" 'ess-eval-word
     "e" 'ess-eval-paragraph-and-step
+    "t" 'output-object-structure
     ;; R Markdown
     "kc" 'polymode-eval-chunk
     "kr" 'tide-rmd-rend
