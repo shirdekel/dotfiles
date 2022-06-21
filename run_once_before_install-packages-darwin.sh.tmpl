@@ -18,25 +18,13 @@ brew "koekeishiya/formulae/skhd"
 # For Zotero OCR
 brew "tesseract"
 
-cask "firefox"
 cask "brave-browser"
-cask "microsoft-office"
-cask "dropbox"
-cask "whatsapp"
-cask "microsoft-teams"
-cask "spotify"
 cask "bitwarden"
-cask "visual-studio-code"
-cask "zoom"
 cask "zotero"
 cask "r"
-cask "adobe-creative-cloud"
-cask "vlc"
-cask "qbittorrent"
 cask "karabiner-elements"
 cask "rstudio"
 cask "the-unarchiver"
-cask "cryptomator"
 cask "quarto"
 
 # Emacs installation (from https://github.com/syl20bnr/spacemacs#macos)
@@ -48,18 +36,6 @@ tap "homebrew/cask-fonts"
 brew "svn"
 cask "font-source-code-pro"
 EOF
-
-# Link Emacs to Applications directory if it doesn't already exist there
-if [ ! -e "/Applications/Emacs.app" ]; then
-ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
-fi
-
-# R console to use in VSCode
-pip3 install -U radian
-
-# Synology
-
-echo "Install Synology Drive and Assistant manually from https://www.synology.com/en-us/support/download/DS220j?version=7.0#utilities"
 
 # Zotero
 
@@ -85,6 +61,50 @@ fi
 
 # Logi Options+
 # Install manually: https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.zip
+
+{{ end -}}
+
+
+{{- if (eq .chezmoi.arch "arm64") -}}
+#!/bin/bash
+
+# From https://www.chezmoi.io/docs/how-to/#use-chezmoi-on-macos and https://github.com/twpayne/dotfiles/blob/7873d5735522915076c17d41ad52c8ac813d321b/run_once_before_10-install-packages-darwin.sh.tmpl
+
+set -eufo pipefail
+
+cask "firefox"
+cask "microsoft-office"
+cask "dropbox"
+cask "whatsapp"
+cask "microsoft-teams"
+cask "spotify"
+cask "visual-studio-code"
+cask "zoom"
+cask "adobe-creative-cloud"
+cask "vlc"
+cask "qbittorrent"
+cask "cryptomator"
+
+EOF
+
+# Link Emacs to Applications directory if it doesn't already exist there
+if [ ! -e "/Applications/Emacs.app" ]; then
+ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
+fi
+
+# R console to use in VSCode
+pip3 install -U radian
+
+# Synology
+
+echo "Install Synology Drive and Assistant manually from https://www.synology.com/en-us/support/download/DS220j?version=7.0#utilities"
+
+{{- else if (eq .chezmoi.os "amd64") -}}
+
+# Link Emacs to Applications directory if it doesn't already exist there
+if [ ! -e "/Applications/Emacs.app" ]; then
+ln -s /usr/local/bin/emacs-plus@28/Emacs.app /Applications
+fi
 
 {{ end -}}
 
