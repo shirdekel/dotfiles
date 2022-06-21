@@ -51,7 +51,8 @@ This function should only modify configuration layer settings."
                markdown-live-preview-mode nil)
      multiple-cursors
      (org :variables
-          org-want-todo-bindings t)
+          org-want-todo-bindings t
+          org-enable-roam-support t)
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -80,6 +81,7 @@ This function should only modify configuration layer settings."
      chezmoi
      (ranger :variables
              ranger-show-preview t)
+     bibtex
     )
 
 
@@ -110,6 +112,10 @@ This function should only modify configuration layer settings."
      quarto-mode
      tzc
      ess-view-data
+     org-download
+     zotxt
+     biblio
+     ebib
    )
 
    ;; A list of packages that cannot be updated.
@@ -787,6 +793,57 @@ By default, all subentries are counted; restrict with LEVEL."
   ;; Disable LSP sideline
   (setq lsp-ui-sideline-enable nil)
 
+  ;; Set up org-roam directory
+  (setq org-roam-directory (file-truename "~/Documents/org-roam/"))
+
+  ;; Auto-sync org-roam database
+  (org-roam-db-autosync-mode)
+
+  ;; Set up org-roam section
+  (setq org-roam-mode-sections
+        (list #'org-roam-backlinks-section
+              #'org-roam-reflinks-section
+              ;; #'org-roam-unlinked-references-section
+              ))
+
+  ;; Temporary fix to buffer order issue
+  (global-page-break-lines-mode 0)
+
+  ;; Set org-roam buffer display
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
+
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("\\*org-roam\\*"
+  ;;                (display-buffer-in-side-window)
+  ;;                (side . right)
+  ;;                (slot . 0)
+  ;;                (window-width . 0.33)
+  ;;                (window-parameters . ((no-other-window . t)
+  ;;                                      (no-delete-other-windows . t)))))
+
+  (setq org-roam-completion-everywhere t)
+  (setq org-roam-dailies-directory "daily/")
+
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry
+           "* %?"
+           :target (file+head "%<%Y-%m-%d>.org"
+                              "#+title: %<%Y-%m-%d>\n"))))
+  (setq org-id-track-globally t)
+  (require 'org-roam-export)
+
+  ;; Set up bibtex
+  (setq bibtex-completion-bibliography '("~/Documents/research/references.bib")
+        bibtex-completion-library-path "~/Documents/research/zotero_library"
+        bibtex-completion-notes-path "~/Dropbox (Personal)/notes/papers.org")
+
+  ;; Activate org-zotxt-mode in org-mode buffers
+  (add-hook 'org-mode-hook (lambda () (org-zotxt-mode 1)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -803,7 +860,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
-   '(company-reftex company-math math-symbol-lists company-auctex auctex ess-view-data csv-mode tzc quarto-mode sx osm eaf yaml-mode spss org-fragtog bitwarden ranger chezmoi ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs cfrs pfuture posframe toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons memoize all-the-icons spaceline powerline restart-emacs request rainbow-delimiters quickrun popwin persp-mode password-generator paradox spinner overseer org-superstar open-junk-file nameless multi-line shut-up macrostep lorem-ipsum link-hint inspector info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl flycheck-elsa flx-ido flx fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection annalist evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu emr iedit clang-format projectile paredit list-utils elisp-slime-nav editorconfig dumb-jump s drag-stuff dired-quick-sort devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol ht dash auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el hydra lv hybrid-mode font-lock+ evil goto-chg dotenv-mode diminish bind-map bind-key async))
+   '(org-ref citeproc helm-bibtex bibtex-completion parsebib biblio biblio-core mathpix company-reftex company-math math-symbol-lists company-auctex auctex ess-view-data csv-mode tzc quarto-mode sx osm eaf yaml-mode spss org-fragtog bitwarden ranger chezmoi ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs cfrs pfuture posframe toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons memoize all-the-icons spaceline powerline restart-emacs request rainbow-delimiters quickrun popwin persp-mode password-generator paradox spinner overseer org-superstar open-junk-file nameless multi-line shut-up macrostep lorem-ipsum link-hint inspector info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl flycheck-elsa flx-ido flx fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection annalist evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu emr iedit clang-format projectile paredit list-utils elisp-slime-nav editorconfig dumb-jump s drag-stuff dired-quick-sort devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol ht dash auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el hydra lv hybrid-mode font-lock+ evil goto-chg dotenv-mode diminish bind-map bind-key async))
  '(paradox-github-token t)
  '(warning-suppress-log-types
    '((use-package)
