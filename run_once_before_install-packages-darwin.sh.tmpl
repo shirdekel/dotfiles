@@ -77,6 +77,8 @@ fi
 
 set -eufo pipefail
 
+brew bundle --no-lock --file=/dev/stdin <<EOF
+
 cask "firefox"
 cask "microsoft-office"
 cask "dropbox"
@@ -104,7 +106,16 @@ pip3 install -U radian
 
 echo "Install Synology Drive and Assistant manually from https://www.synology.com/en-us/support/download/DS220j?version=7.0#utilities"
 
-{{- else if (eq .chezmoi.os "amd64") -}}
+{{- else if (eq .chezmoi.arch "amd64") -}}
+#!/bin/bash
+
+set -eufo pipefail
+
+brew bundle --no-lock --file=/dev/stdin <<EOF
+
+cask "google-drive"
+
+EOF
 
 # Link Emacs to Applications directory if it doesn't already exist there
 if [ ! -e "/Applications/Emacs.app" ]; then
