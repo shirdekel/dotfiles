@@ -54,8 +54,9 @@ This function should only modify configuration layer settings."
           org-want-todo-bindings t
           org-enable-roam-support t)
      (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
+            shell-default-width 50
+            shell-default-position 'right
+            shell-default-shell 'eshell)
      spell-checking
      syntax-checking
      version-control
