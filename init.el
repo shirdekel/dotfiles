@@ -125,6 +125,10 @@ This function should only modify configuration layer settings."
      biblio
      ebib
      org-noter
+     polymode
+     poly-markdown
+     markdown-mode
+     request
    )
 
    ;; A list of packages that cannot be updated.
@@ -849,6 +853,9 @@ By default, all subentries are counted; restrict with LEVEL."
 
   ;; Activate org-zotxt-mode in org-mode buffers
   (add-hook 'org-mode-hook (lambda () (org-zotxt-mode 1)))
+  ;; Load quarto-mode
+  (require 'quarto-mode)
+
   ;; Open ebib files in Emacs
   (setq ebib-file-associations '(("pdf") ("ps" . "gv")))
 
