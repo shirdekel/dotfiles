@@ -49,6 +49,7 @@ ctrl + alt - z  : yabai -m display --focus recent
 # ctrl + cmd - c  : yabai -m window --display recent; yabai -m display --focus recent
 ctrl + cmd - 1  : yabai -m window --display 1; yabai -m display --focus 1; yabai -m window --grid 1:1:0:0:1:1
 ctrl + cmd - 2  : yabai -m window --display 2; yabai -m display --focus 2; yabai -m window --grid 1:1:0:0:1:1
+ctrl + cmd - 3  : yabai -m window --display 3; yabai -m display --focus 3; yabai -m window --grid 1:1:0:0:1:1
 
 # move floating window
 # shift + ctrl - a : yabai -m window --move rel:-20:0
