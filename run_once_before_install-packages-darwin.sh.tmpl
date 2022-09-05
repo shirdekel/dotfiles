@@ -23,6 +23,7 @@ brew "koekeishiya/formulae/skhd"
 
 # For Zotero OCR
 brew "tesseract"
+brew "poppler"
 
 cask "brave-browser"
 cask "bitwarden"
@@ -32,6 +33,11 @@ cask "karabiner-elements"
 cask "rstudio"
 cask "the-unarchiver"
 cask "quarto"
+# For smooth scrolling
+cask "mos"
+
+# Keyboard
+cask "via"
 
 # Emacs installation (from https://github.com/syl20bnr/spacemacs#macos)
 tap "d12frosted/emacs-plus"
@@ -64,6 +70,8 @@ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 fi
 # Download logo manually: https://github.com/nashamri/spacemacs-logo/raw/master/spacemacs.icns
 # Add to icon manually: https://www.idownloadblog.com/2014/07/16/how-to-change-app-icon-mac/
+# Need to first remove directory if already loaded vanilla emacs first, e.g.,:
+# rm -r ~/.emacs.d
 
 # Logi Options+
 # Install manually: https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.zip
@@ -124,4 +132,6 @@ ln -s /usr/local/opt/emacs-plus@28/Emacs.app /Applications
 fi
 
 {{ end -}}
+
+
 
