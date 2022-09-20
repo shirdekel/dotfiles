@@ -46,5 +46,8 @@ options("fnmate_quote_jump_regex" = TRUE)
 # From https://stackoverflow.com/a/31567541/13945974
 options(setWidthOnResize = TRUE)
 
+# Enable crayon for terminal colours
+options(crayon.enabled = TRUE) 
+
 # Clean up
 rm(list = ls())

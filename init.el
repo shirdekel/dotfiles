@@ -129,6 +129,7 @@ This function should only modify configuration layer settings."
      poly-markdown
      markdown-mode
      request
+     exec-path-from-shell
    )
 
    ;; A list of packages that cannot be updated.
@@ -241,6 +242,13 @@ It should only modify the values of Spacemacs settings."
    ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
 
+   ;; Scale factor controls the scaling (size) of the startup banner. Default
+   ;; value is `auto' for scaling the logo automatically to fit all buffer
+   ;; contents, to a maximum of the full image height and a minimum of 3 line
+   ;; heights. If set to a number (int or float) it is used as a constant
+   ;; scaling factor for the default logo size.
+   dotspacemacs-startup-banner-scale 'auto
+
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -262,6 +270,11 @@ It should only modify the values of Spacemacs settings."
 
    ;; The minimum delay in seconds between number key presses. (default 0.4)
    dotspacemacs-startup-buffer-multi-digit-delay 0.4
+
+   ;; If non-nil, show file icons for entries and headings on Spacemacs home buffer.
+   ;; This has no effect in terminal or if "all-the-icons" package or the font
+   ;; is not installed. (default nil)
+   dotspacemacs-startup-buffer-show-icons nil
 
    ;; Default major mode for a new empty buffer. Possible values are mode
    ;; names such as `text-mode'; and `nil' to use Fundamental mode.
@@ -535,8 +548,10 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil - same as frame-title-format)
    dotspacemacs-icon-title-format nil
 
-   ;; Show trailing whitespace (default t)
-   dotspacemacs-show-trailing-whitespace t
+   ;; Color highlight trailing whitespace in all prog-mode and text-mode derived
+   ;; modes such as c++-mode, python-mode, emacs-lisp, html-mode, rst-mode etc.
+   ;; (default t)
+   dotspacemacs-show-trailing-whitespace t 
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
    ;; to aggressively delete empty line and long sequences of whitespace,
@@ -593,6 +608,11 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+
+  ;; (add-hook 'ess-r-mode-hook
+  ;;           (lambda ()
+  ;;             (push '("|>" . ?▷) prettify-symbols-alist)))
+
 )
 
 
@@ -614,7 +634,10 @@ before packages are loaded."
   (spacemacs/toggle-visual-line-navigation-on)
   (add-hook 'text-mode-hook (lambda () (visual-line-mode t)))
   (add-hook 'prog-mode-hook (lambda () (visual-line-mode t)))
+
+  ;; Prettify symbols
   (global-prettify-symbols-mode 1)
+
   (use-package ess-r-mode
     :bind
     (:map ess-r-mode-map
@@ -803,7 +826,7 @@ By default, all subentries are counted; restrict with LEVEL."
   (setq lsp-ui-sideline-enable nil)
 
   ;; Set up org-roam directory
-  (setq org-roam-directory (file-truename "~/Documents/org-roam/"))
+  (setq org-roam-directory (file-truename "~/Google Drive/My Drive/org-roam"))
 
   ;; Auto-sync org-roam database
   (org-roam-db-autosync-mode)
@@ -863,6 +886,15 @@ By default, all subentries are counted; restrict with LEVEL."
   (setq ebib-filename-separator ";")
 
   (setq org-noter-always-create-frame nil)
+
+  ;; Set locale settings to avoid R startup warnings (because apparently Emacs doesn't
+  ;; inherit ENV variables)
+  (setenv "LANG" "en_AU.UTF-8")
+  (setenv "LC_ALL" "en_AU.UTF-8")
+
+  ;; Set up ess-view-data
+
+  (setq ess-view-data-print-backend-list '(kable print))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -877,6 +909,52 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ess-r-prettify-symbols
+   '(("<-" 32
+      (Br . Bl)
+      32
+      (Bc . Bc)
+      8592)
+     ("->" 32
+      (Br . Bl)
+      32
+      (Bc . Bc)
+      8594)
+     ("->>" 32
+      (Br . Bl)
+      32
+      (Br . Bl)
+      32
+      (Bl . Bl)
+      45
+      (Bc . Br)
+      45
+      (Bc . Bc)
+      62
+      (Bc . Bl)
+      45
+      (Br . Br)
+      62)
+     ("<<-" 32
+      (Br . Bl)
+      32
+      (Br . Bl)
+      32
+      (Bl . Bl)
+      60
+      (Bc . Br)
+      45
+      (Bc . Bc)
+      45
+      (Bc . Bl)
+      60
+      (Br . Br)
+      45)
+     ("|>" 32
+      (Br . Bl)
+      32
+      (Bc . Bc)
+      9655)))
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    '(ebib org-noter org-ref citeproc helm-bibtex bibtex-completion parsebib biblio biblio-core mathpix company-reftex company-math math-symbol-lists company-auctex auctex ess-view-data csv-mode tzc quarto-mode sx osm eaf yaml-mode spss org-fragtog bitwarden ranger chezmoi ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs cfrs pfuture posframe toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons memoize all-the-icons spaceline powerline restart-emacs request rainbow-delimiters quickrun popwin persp-mode password-generator paradox spinner overseer org-superstar open-junk-file nameless multi-line shut-up macrostep lorem-ipsum link-hint inspector info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl flycheck-elsa flx-ido flx fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection annalist evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu emr iedit clang-format projectile paredit list-utils elisp-slime-nav editorconfig dumb-jump s drag-stuff dired-quick-sort devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol ht dash auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el hydra lv hybrid-mode font-lock+ evil goto-chg dotenv-mode diminish bind-map bind-key async))
