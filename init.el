@@ -895,6 +895,11 @@ By default, all subentries are counted; restrict with LEVEL."
   ;; Set up ess-view-data
 
   (setq ess-view-data-print-backend-list '(kable print))
+
+  ;; Fix split orientation changing depending on monitor size
+
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 0)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

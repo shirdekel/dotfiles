@@ -31,11 +31,12 @@ install_if_missing("remotes")
 
 install_if_missing("tidyverse")
 
-install_github_if_missing("tflow", "MilesMcBain")
-install_github_if_missing("capsule", "MilesMcBain")
-install_github_if_missing("fnmate", "MilesMcBain")
-install_github_if_missing("breakerofchains", "MilesMcBain")
-install_github_if_missing("rmdocs", "MilesMcBain")
+## Creates loop
+## install_github_if_missing("tflow", "MilesMcBain")
+## install_github_if_missing("capsule", "MilesMcBain")
+## install_github_if_missing("fnmate", "MilesMcBain")
+## install_github_if_missing("breakerofchains", "MilesMcBain")
+## install_github_if_missing("rmdocs", "MilesMcBain")
 install_if_missing("Jmisc")
 install_if_missing("beepr")
 

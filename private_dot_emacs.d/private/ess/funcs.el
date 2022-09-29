@@ -273,6 +273,8 @@
     "cs" 'tide-save-and-style-file
     ;; Shiny
     "Sr" 'tide-shiny-run-app
+    ;; Dumb jump
+    "j" 'dumb-jump-go
     ))
 
 (defun spacemacs//ess-bind-repl-keys-for-mode (mode)
