@@ -84,10 +84,10 @@ This function should only modify configuration layer settings."
              ranger-show-preview t)
      (bibtex :variables
              bibtex-enable-ebib-support t
-             ebib-preload-bib-files '("~/Google Drive/My Drive/research/references.bib")
-             ebib-file-search-dirs '("~/Documents/research/zotero_library")
+             ;; ebib-preload-bib-files '("~/Google Drive/My Drive/research/references.bib")
+             ;; ebib-file-search-dirs '("~/Documents/research/zotero_library")
              ebib-import-directory "~/Downloads/"
-             ebib-notes-directory "Google Drive/My Drive/research/"
+             ;; ebib-notes-directory "Google Drive/My Drive/research/"
              bibtex-completion-pdf-field "file"
              )
     )
@@ -826,7 +826,7 @@ By default, all subentries are counted; restrict with LEVEL."
   (setq lsp-ui-sideline-enable nil)
 
   ;; Set up org-roam directory
-  (setq org-roam-directory (file-truename "~/Google Drive/My Drive/org-roam"))
+  ;; (setq org-roam-directory (file-truename "~/Google Drive/My Drive/org-roam"))
 
   ;; Auto-sync org-roam database
   (org-roam-db-autosync-mode)
