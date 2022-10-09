@@ -900,6 +900,12 @@ By default, all subentries are counted; restrict with LEVEL."
 
   (setq split-height-threshold nil)
   (setq split-width-threshold 0)
+
+  ;; Sync environment variables
+
+  (package-initialize)
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
