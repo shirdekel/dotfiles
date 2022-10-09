@@ -52,11 +52,11 @@ This function should only modify configuration layer settings."
      multiple-cursors
      (org :variables
           org-want-todo-bindings t
-          org-enable-roam-support t)
+          ;; org-enable-roam-support t
+          )
      (shell :variables
             shell-default-width 50
-            shell-default-position 'right
-            shell-default-shell 'eshell)
+            shell-default-position 'right)
      spell-checking
      syntax-checking
      version-control
@@ -829,25 +829,25 @@ By default, all subentries are counted; restrict with LEVEL."
   ;; (setq org-roam-directory (file-truename "~/Google Drive/My Drive/org-roam"))
 
   ;; Auto-sync org-roam database
-  (org-roam-db-autosync-mode)
+  ;; (org-roam-db-autosync-mode)
 
   ;; Set up org-roam section
-  (setq org-roam-mode-sections
-        (list #'org-roam-backlinks-section
-              #'org-roam-reflinks-section
-              ;; #'org-roam-unlinked-references-section
-              ))
+  ;; (setq org-roam-mode-sections
+  ;;       (list #'org-roam-backlinks-section
+  ;;             #'org-roam-reflinks-section
+  ;;             ;; #'org-roam-unlinked-references-section
+  ;;             ))
 
   ;; Temporary fix to buffer order issue
   (global-page-break-lines-mode 0)
 
   ;; Set org-roam buffer display
-  (add-to-list 'display-buffer-alist
-               '("\\*org-roam\\*"
-                 (display-buffer-in-direction)
-                 (direction . right)
-                 (window-width . 0.33)
-                 (window-height . fit-window-to-buffer)))
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("\\*org-roam\\*"
+  ;;                (display-buffer-in-direction)
+  ;;                (direction . right)
+  ;;                (window-width . 0.33)
+  ;;                (window-height . fit-window-to-buffer)))
 
   ;; (add-to-list 'display-buffer-alist
   ;;              '("\\*org-roam\\*"
@@ -858,16 +858,16 @@ By default, all subentries are counted; restrict with LEVEL."
   ;;                (window-parameters . ((no-other-window . t)
   ;;                                      (no-delete-other-windows . t)))))
 
-  (setq org-roam-completion-everywhere t)
-  (setq org-roam-dailies-directory "daily/")
+  ;; (setq org-roam-completion-everywhere t)
+  ;; (setq org-roam-dailies-directory "daily/")
 
-  (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry
-           "* %?"
-           :target (file+head "%<%Y-%m-%d>.org"
-                              "#+title: %<%Y-%m-%d>\n"))))
-  (setq org-id-track-globally t)
-  (require 'org-roam-export)
+  ;; (setq org-roam-dailies-capture-templates
+  ;;       '(("d" "default" entry
+  ;;          "* %?"
+  ;;          :target (file+head "%<%Y-%m-%d>.org"
+  ;;                             "#+title: %<%Y-%m-%d>\n"))))
+  ;; (setq org-id-track-globally t)
+  ;; (require 'org-roam-export)
 
   ;; Set up bibtex
   (setq bibtex-completion-bibliography '("~/Documents/research/references.bib")
