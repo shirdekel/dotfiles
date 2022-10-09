@@ -6,10 +6,10 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## Install chezmoi
+## Install chezmoi files
 
 ```sh
-brew install chezmoi
+sh -c "$(curl -fsLS https://chezmoi.io/get)" -- init --apply shirdekel
 ```
 
 ## Log into Bitwarden 
