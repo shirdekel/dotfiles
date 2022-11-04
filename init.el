@@ -906,6 +906,12 @@ By default, all subentries are counted; restrict with LEVEL."
   (package-initialize)
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize))
+
+  ;; Fix csv-mode
+
+  (add-hook 'csv-mode-hook (lambda () (spacemacs/toggle-visual-line-navigation-off)))
+  (add-hook 'csv-mode-hook (lambda () (spacemacs/toggle-line-numbers-off)))
+  (add-hook 'csv-mode-hook (lambda () (spacemacs/toggle-auto-fill-mode-off)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
