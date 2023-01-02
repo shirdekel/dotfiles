@@ -14,6 +14,7 @@ brew "pandoc"
 brew "ripgrep"
 brew "aspell"
 brew "coreutils"
+brew "chezmoi"
 
 # Yabai
 brew "koekeishiya/formulae/yabai"
@@ -35,6 +36,8 @@ cask "the-unarchiver"
 cask "quarto"
 # For smooth scrolling
 cask "mos"
+cask "google-drive"
+cask "spotify"
 
 # Keyboard
 cask "via"
@@ -92,18 +95,18 @@ set -eufo pipefail
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
 
-cask "firefox"
-cask "microsoft-office"
-cask "dropbox"
-cask "whatsapp"
-cask "microsoft-teams"
-cask "spotify"
-cask "visual-studio-code"
-cask "zoom"
-cask "adobe-creative-cloud"
-cask "vlc"
-cask "qbittorrent"
-cask "cryptomator"
+# cask "firefox"
+# cask "microsoft-office"
+# cask "dropbox"
+# cask "whatsapp"
+# cask "microsoft-teams"
+# cask "spotify"
+# cask "visual-studio-code"
+# cask "zoom"
+# cask "adobe-creative-cloud"
+# cask "vlc"
+# cask "qbittorrent"
+# cask "cryptomator"
 
 EOF
 
@@ -113,7 +116,7 @@ ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
 fi
 
 # R console to use in VSCode
-pip3 install -U radian
+# pip3 install -U radian
 
 # Synology
 
