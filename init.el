@@ -55,6 +55,7 @@ This function should only modify configuration layer settings."
           ;; org-enable-roam-support t
           )
      (shell :variables
+            shell-default-shell 'eshell
             shell-default-width 50
             shell-default-position 'right)
      spell-checking
