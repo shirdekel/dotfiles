@@ -156,9 +156,13 @@ It should only modify the values of Spacemacs settings."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
-   ;; If non-nil then enable support for the portable dumper. You'll need
-   ;; to compile Emacs 27 from source following the instructions in file
+   ;; If non-nil then enable support for the portable dumper. You'll need to
+   ;; compile Emacs 27 from source following the instructions in file
    ;; EXPERIMENTAL.org at to root of the git repository.
+   ;;
+   ;; WARNING: pdumper does not work with Native Compilation, so it's disabled
+   ;; regardless of the following setting when native compilation is in effect.
+   ;;
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
 
@@ -426,8 +430,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
-   ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
-   ;; borderless fullscreen. (default nil)
+   ;; variable with `dotspacemacs-maximized-at-startup' to obtain fullscreen
+   ;; without external boxes. Also disables the internal border. (default nil)
    dotspacemacs-undecorated-at-startup nil
 
    ;; A value from the range (0..100), in increasing opacity, which describes
@@ -439,6 +443,11 @@ It should only modify the values of Spacemacs settings."
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-inactive-transparency 90
+
+   ;; A value from the range (0..100), in increasing opacity, which describes the
+   ;; transparency level of a frame background when it's active or selected. Transparency
+   ;; can be toggled through `toggle-background-transparency'. (default 90)
+   dotspacemacs-background-transparency 90
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -552,7 +561,7 @@ It should only modify the values of Spacemacs settings."
    ;; Color highlight trailing whitespace in all prog-mode and text-mode derived
    ;; modes such as c++-mode, python-mode, emacs-lisp, html-mode, rst-mode etc.
    ;; (default t)
-   dotspacemacs-show-trailing-whitespace t 
+   dotspacemacs-show-trailing-whitespace t
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
    ;; to aggressively delete empty line and long sequences of whitespace,
@@ -907,6 +916,45 @@ By default, all subentries are counted; restrict with LEVEL."
   (package-initialize)
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize))
+
+  ;; Fix csv-mode
+
+  (add-hook 'csv-mode-hook (lambda () (spacemacs/toggle-visual-line-navigation-off)))
+  (add-hook 'csv-mode-hook (lambda () (spacemacs/toggle-line-numbers-off)))
+  (add-hook 'csv-mode-hook (lambda () (spacemacs/toggle-auto-fill-mode-off)))
+
+  ;; Save clock history across Emacs sessions
+  ;; From https://orgmode.org/manual/Clocking-Work-Time.html
+
+  (setq org-clock-persist 'history)
+  (org-clock-persistence-insinuate)
+
+  ;; Set up org directory
+  ;; From https://stackoverflow.com/a/37056872/13945974
+
+  (custom-set-variables
+   '(org-directory "/Volumes/GoogleDrive/My Drive/notes/"))
+
+  ;; Set up org-capture
+
+  (setq org-default-notes-file (concat org-directory "notes.org"))
+
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "tasks.org" "Unfiled")
+           "* TODO %?\n  %u\n  %a")
+          ("m" "Meeting" entry (file+headline "meetings.org" "Unfiled")
+           "* %?" :jump-to-captured t :clock-in t :clock-keep t)))
+
+  ;; TODO entry to automatically change to DONE when all children are done
+
+  (defun org-summary-todo (n-done n-not-done)
+    "Switch entry to DONE when all subentries are done, to TODO otherwise."
+    (let (org-log-done org-log-states)   ; turn off logging
+      (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+  (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
+
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -968,6 +1016,8 @@ This function is called at the very end of Spacemacs initialization."
       (Bc . Bc)
       9655)))
  '(evil-want-Y-yank-to-eol nil)
+ '(org-agenda-files
+   '("/Volumes/GoogleDrive/My Drive/notes/TODOs.org" "/Volumes/GoogleDrive/My Drive/notes/meetings.org" "/Volumes/GoogleDrive/My Drive/notes/tasks.org"))
  '(package-selected-packages
    '(ebib org-noter org-ref citeproc helm-bibtex bibtex-completion parsebib biblio biblio-core mathpix company-reftex company-math math-symbol-lists company-auctex auctex ess-view-data csv-mode tzc quarto-mode sx osm eaf yaml-mode spss org-fragtog bitwarden ranger chezmoi ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs cfrs pfuture posframe toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons memoize all-the-icons spaceline powerline restart-emacs request rainbow-delimiters quickrun popwin persp-mode password-generator paradox spinner overseer org-superstar open-junk-file nameless multi-line shut-up macrostep lorem-ipsum link-hint inspector info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl flycheck-elsa flx-ido flx fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection annalist evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu emr iedit clang-format projectile paredit list-utils elisp-slime-nav editorconfig dumb-jump s drag-stuff dired-quick-sort devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol ht dash auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el hydra lv hybrid-mode font-lock+ evil goto-chg dotenv-mode diminish bind-map bind-key async))
  '(paradox-github-token t)
