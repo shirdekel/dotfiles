@@ -670,7 +670,7 @@ before packages are loaded."
   (define-key evil-insert-state-map [mouse-2] nil)
   (define-key global-map [mouse-2] nil)
   (setq org-todo-keywords
-        '((sequence "TODO(t!)" "|" "CANCELLED(c!)" "DONE(d!)")))
+        '((sequence "TODO(t)" "|" "CANCELLED(c@)" "DONE(d!)")))
   (setq org-todo-keyword-faces
         '(("CANCELED" . (:foreground "white" :background "#4d4d4d" :weight bold))
           ))
