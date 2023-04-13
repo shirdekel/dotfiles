@@ -938,14 +938,14 @@ By default, all subentries are counted; restrict with LEVEL."
   ;; From https://stackoverflow.com/a/37056872/13945974
 
   (custom-set-variables
-   '(org-directory "/Volumes/GoogleDrive/My Drive/notes/"))
+   '(org-directory "~/Library/CloudStorage/GoogleDrive-shir.a.dekel@pwc.com/My Drive/notes/"))
 
   ;; Set up org-capture
 
   (setq org-default-notes-file (concat org-directory "notes.org"))
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "tasks.org" "Unfiled")
+        '(("t" "Todo" entry (file+headline "TODOs.org" "Unfiled")
            "* TODO %?\n  %u\n  %a")
           ("m" "Meeting" entry (file+headline "meetings.org" "Unfiled")
            "* %?" :jump-to-captured t :clock-in t :clock-keep t)))
@@ -959,6 +959,27 @@ By default, all subentries are counted; restrict with LEVEL."
 
   (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
 
+  ;; Make lowest org TODO priority D
+
+  (setq org-priority-lowest ?D)
+
+  ;; TODO blocking
+
+  (setq org-enforce-todo-dependencies t)
+
+  ;; Configure org-super-agenda
+
+  (setq org-super-agenda-groups
+        '(
+          (:name "Important"
+                 :priority "A")
+          (:auto-parent t)
+          ))
+
+  (spacemacs|use-package-add-hook org-agenda
+    :post-config
+    (org-super-agenda-mode t)
+    )
 
   )
 
