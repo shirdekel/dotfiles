@@ -981,6 +981,12 @@ By default, all subentries are counted; restrict with LEVEL."
     (org-super-agenda-mode t)
     )
 
+  ;; ChatGPT
+
+  (require 'python)
+  (setq chatgpt-repo-path (expand-file-name "chatgpt/" quelpa-build-dir))
+  (global-set-key (kbd "C-c q") #'chatgpt-query)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
