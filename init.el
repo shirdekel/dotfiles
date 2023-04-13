@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(csv
+   '(lua
+     csv
      yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -130,6 +131,11 @@ This function should only modify configuration layer settings."
      markdown-mode
      request
      exec-path-from-shell
+     org-super-agenda
+     ftable
+     (chatgpt :location (recipe
+                         :fetcher github
+                         :repo "joshcho/ChatGPT.el"))
    )
 
    ;; A list of packages that cannot be updated.
