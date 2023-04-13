@@ -110,7 +110,7 @@
 (defun source-functions ()
   "source ./R"
   (interactive)
-  (ess-eval-linewise "Jmisc::sourceAll('R')"))
+  (ess-eval-linewise "targets::tar_source()"))
 
 (defun source-packages-file ()
   "source ./packages.R"
