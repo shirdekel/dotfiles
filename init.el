@@ -994,6 +994,9 @@ By default, all subentries are counted; restrict with LEVEL."
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-targets '((nil :maxlevel . 5)))
   (setq org-refile-allow-creating-parent-nodes 'confirm)
+
+  ;; Fix magit git path
+  (setq magit-git-executable "/opt/homebrew/bin/git")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
