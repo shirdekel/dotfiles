@@ -947,7 +947,7 @@ By default, all subentries are counted; restrict with LEVEL."
 
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "TODOs.org" "Unfiled")
-           "* TODO %?\n  %u\n  %a")
+           "* TODO [#A] %?\n  %u")
           ("m" "Meeting" entry (file+headline "meetings.org" "Unfiled")
            "* %?" :jump-to-captured t :clock-in t :clock-keep t)))
 
