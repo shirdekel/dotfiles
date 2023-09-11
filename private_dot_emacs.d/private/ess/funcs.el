@@ -106,6 +106,11 @@
   (let ((target (symbol-at-point)))
     (ess-eval-linewise (format "%s <- targets::tar_read(%s)\n" target target))))
 
+(defun targets-error ()
+  (interactive)
+  (ess-eval-linewise "targets_error <- targets::tar_meta(fields = error, complete_only = TRUE, targets_only = TRUE)")
+  (ess-eval-linewise "targets_error"))
+
 ;; Source
 (defun source-functions ()
   "source ./R"
@@ -258,6 +263,7 @@
     "mr" 'readd-target-at-point
     "ml" 'targets-read-target-at-point
     "mp" 'source-packages-file
+    "me" 'targets-error
     ;; Fnmate
     "ff" 'fnmate
     ;; REPL
