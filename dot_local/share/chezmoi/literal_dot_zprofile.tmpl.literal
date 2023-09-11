@@ -1,0 +1,15 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+OPENAI_API_KEY={{(bitwardenFields "item" "OpenAI").api.value}}
+
+
+
+# openblas is keg-only, which means it was not symlinked into /opt/homebrew,
+# because macOS provides BLAS in Accelerate.framework.
+
+# For compilers to find openblas:
+LDFLAGS="-L/opt/homebrew/opt/openblas/lib"
+CPPFLAGS="-I/opt/homebrew/opt/openblas/include"
+
+# For pkg-config to find openblas:
+PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig"
