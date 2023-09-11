@@ -31,6 +31,8 @@ install_if_missing("remotes")
 
 install_if_missing("tidyverse")
 
+install_if_missing("targets")
+
 ## Creates loop
 ## install_github_if_missing("tflow", "MilesMcBain")
 ## install_github_if_missing("capsule", "MilesMcBain")
