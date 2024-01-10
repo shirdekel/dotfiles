@@ -991,6 +991,9 @@ By default, all subentries are counted; restrict with LEVEL."
 
   ;; Fix magit git path
   (setq magit-git-executable "/opt/homebrew/bin/git")
+
+  ;; Fix dumb-jump
+  (setq dumb-jump-force-searcher 'rg)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
