@@ -968,6 +968,13 @@ By default, all subentries are counted; restrict with LEVEL."
 
   (setq org-enforce-todo-dependencies t)
 
+  ;; Setup org-refile
+
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-targets '((nil :maxlevel . 5)))
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+
   ;; Configure org-super-agenda
 
   (setq org-super-agenda-groups
@@ -987,13 +994,6 @@ By default, all subentries are counted; restrict with LEVEL."
   (require 'python)
   (setq chatgpt-repo-path (expand-file-name "chatgpt/" quelpa-build-dir))
   (global-set-key (kbd "C-c q") #'chatgpt-query)
-
-  ;; Setup org-refile
-
-  (setq org-refile-use-outline-path 'file)
-  (setq org-outline-path-complete-in-steps nil)
-  (setq org-refile-targets '((nil :maxlevel . 5)))
-  (setq org-refile-allow-creating-parent-nodes 'confirm)
 
   ;; Fix magit git path
   (setq magit-git-executable "/opt/homebrew/bin/git")
